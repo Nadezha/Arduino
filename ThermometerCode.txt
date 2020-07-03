@@ -1,0 +1,78 @@
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(11, 10, 5, 4, 3, 2); //Bildschirm 
+
+int sensorTemp = 0;
+
+float tempinC;
+
+void setup() {
+  pinMode(7, OUTPUT); //Leds als Output
+  pinMode(8, OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(13, OUTPUT);
+  pinMode(12, INPUT);
+  lcd.begin(16, 2);
+}
+void loop() {
+tempinC = get_temperature(sensorTemp);
+lcd.setCursor(0,0);
+lcd.print("Temparatur: "); 
+lcd.setCursor(0,1);
+lcd.print (tempinC, 1); lcd.print(" "); lcd.print("Celsius");	//Ausgabe auf den Bildschirm printen
+delay(200);
+
+ if (tempinC == 10){			//die blaue Lampe leuchtet wenn es 10 grad ist
+    digitalWrite(7, HIGH);
+    digitalWrite(8, LOW);
+    digitalWrite(6, LOW);
+    digitalWrite(13, LOW);
+    
+   	noTone(12);
+   
+  }
+  
+  
+ else if (tempinC > 30){	//die rote lampe leuchtet wenn es wärmer ist als 30 grad und ein Ton wird ausgestrahlt 
+    digitalWrite(7, LOW);
+    digitalWrite(6, LOW);
+    digitalWrite(13, LOW);
+    digitalWrite(8, HIGH);
+    
+    tone(12, 400);
+    delay(400);
+    
+  }
+  
+  
+  else if (tempinC <= -10){		//die weisse lampe leuchtet wenn es kälter ist als -10 grad und ein Ton wird ausgestrahlt 
+    digitalWrite(7, LOW);
+    digitalWrite(6, LOW);
+    digitalWrite(13, HIGH);
+    digitalWrite(8, LOW);
+
+    tone(12, 400);
+    delay(500);
+    
+  }
+  
+  
+  else {
+    digitalWrite(6, HIGH);  	//die gelbe Lampe leuchtet bei allen anderen Temparaturen
+    digitalWrite(7, LOW);
+    digitalWrite(8, LOW);
+    digitalWrite(13, LOW);
+
+   
+    noTone(9);
+  } 
+ 
+}
+
+
+float get_temperature(int pin) {
+float temperature = analogRead(pin);
+float voltage = temperature * 6.0;
+voltage = voltage / 1023.0;
+return ((voltage - 0.6) * 100);
+}

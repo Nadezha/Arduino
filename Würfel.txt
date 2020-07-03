@@ -1,0 +1,99 @@
+int leds[] = {13,12,11,10,9,8};
+int button = 7;
+int statusButton;
+int zufallszahl;
+
+
+void setup() {
+
+  for(int index = 0; index <= 6; index++)                     
+
+  {           
+   pinMode(leds[index],OUTPUT);                                                                                      //
+}                                                           
+
+  pinMode(button, INPUT);
+                                                              
+                             
+}
+
+void loop() {
+
+  statusButton = digitalRead(button);
+  
+  if (statusButton == HIGH){
+  
+  	zufallszahl = random(1,7);						//Gibt zufällige Zahl von 1-6
+	Serial.println(zufallszahl);  
+    
+    if (zufallszahl == 1) {
+		digitalWrite(13, HIGH);
+      	delay(1000);
+        digitalWrite(13, LOW);       	
+    }
+  	
+    if (zufallszahl == 2) {
+    	digitalWrite(13, HIGH);
+      	digitalWrite(12, HIGH);
+    	delay(1000);
+      	digitalWrite(13, LOW);
+      	digitalWrite(12, LOW);
+    }
+    
+    if (zufallszahl == 3) {
+    	digitalWrite(13, HIGH);     
+      	digitalWrite(12, HIGH);
+      	digitalWrite(11, HIGH);
+      	delay(1000);
+      	digitalWrite(13, LOW);
+      	digitalWrite(12, LOW);
+      	digitalWrite(11, LOW);
+    }
+    
+     if (zufallszahl == 4) {
+          digitalWrite(13, HIGH);     
+          digitalWrite(12, HIGH);
+          digitalWrite(11, HIGH);
+          digitalWrite(10, HIGH);
+          delay(1000);
+          digitalWrite(13, LOW);
+          digitalWrite(12, LOW);
+          digitalWrite(11, LOW);
+       	  digitalWrite(10, LOW);
+      }
+    
+    if (zufallszahl == 5) {
+    	digitalWrite(13, HIGH);     
+      	digitalWrite(12, HIGH);
+      	digitalWrite(11, HIGH);
+      	digitalWrite(10, HIGH);
+        digitalWrite(9, HIGH);
+      	delay(1000);
+      	digitalWrite(13, LOW);     
+      	digitalWrite(12, LOW);
+      	digitalWrite(11, LOW);
+      	digitalWrite(10, LOW);
+        digitalWrite(9, LOW);
+
+    }
+    
+    if (zufallszahl == 6) {
+    	digitalWrite(13, HIGH);     
+      	digitalWrite(12, HIGH);
+      	digitalWrite(11, HIGH);
+      	digitalWrite(10, HIGH);
+        digitalWrite(9, HIGH);
+        digitalWrite(8, HIGH);
+		delay(1000);
+      	digitalWrite(13, LOW);     
+      	digitalWrite(12, LOW);
+      	digitalWrite(11, LOW);
+      	digitalWrite(10, LOW);
+        digitalWrite(9, LOW);
+        digitalWrite(8, LOW);
+
+    }
+  } 
+  
+  
+}

@@ -1,0 +1,70 @@
+ 
+int led2 = 4;		//Variabeln def
+int led3 = 5;
+int led4 = 6;
+int led5 = 7;
+int led6 = 8;
+int led7 = 9;
+int led8 = 10;
+int knopf2,
+	knopf3,
+	knopf4,
+	knopf5,
+	knopf6,
+	knopf7,
+	knopf8;
+int tonbuzzer = 2; 
+
+
+void setup()
+{
+  Serial.begin(10000);		//Leds als Input
+  pinMode(led2,INPUT);
+  pinMode(led3,INPUT);
+  pinMode(led4,INPUT);
+  pinMode(led5,INPUT);
+  pinMode(led6,INPUT);
+  pinMode(led7,INPUT);
+  pinMode(led8,INPUT);
+  
+}
+
+
+void loop()
+{
+  knopf2 = digitalRead(led2);		//Knöpfe und Leds zuweisen 
+  knopf3 = digitalRead(led3);
+  knopf4 = digitalRead(led4);
+  knopf5 = digitalRead(led5);
+  knopf6 = digitalRead(led6);
+  knopf7 = digitalRead(led7);
+  knopf8 = digitalRead(led8);
+ 
+  
+  
+  if(knopf2 == 1){				//jedem Knopf einen Ton geben wenn gedrückt
+    tone(tonbuzzer,600); 
+  }
+  else if(knopf3 == 1){
+    tone(tonbuzzer,650); 
+  }
+  else if(knopf4 == 1){
+    tone(tonbuzzer,700); 
+  }
+  else if(knopf5 == 1){
+    tone(tonbuzzer,750); 
+  }
+  else if(knopf6 == 1){
+    tone(tonbuzzer,800); 
+  }
+  else if(knopf7 == 1){
+    tone(tonbuzzer,850); 
+  }
+  else if(knopf8 == 1){
+    tone(tonbuzzer,2000); 
+  }
+  else{
+    noTone(tonbuzzer); 
+  }  
+  delay(4); 
+}

@@ -1,0 +1,151 @@
+int ledGreen = 6;
+int ledRed = 7;
+int reset = 8;
+int piezo = 9;
+int sec = 10;
+int min = 11;
+int hour = 12;
+int set = 13;
+int statusReset;
+int statusSec;
+int statusMin;
+int statusHour;
+int statusSet;
+int secTime;
+int minTime;
+int hourTime;
+int time;
+
+void setup()
+  
+{
+  pinMode(piezo, OUTPUT);
+  pinMode(ledGreen, OUTPUT);
+  pinMode(ledRed, OUTPUT);
+  pinMode(reset, INPUT);
+  pinMode(sec, INPUT);
+  pinMode(min, INPUT);
+  pinMode(hour, INPUT);
+  pinMode(set, INPUT);
+
+}
+
+void loop()
+{
+    statusSet = digitalRead(set);
+	statusReset = digitalRead(reset);
+  	statusSec = isSecPressed();
+  	statusMin = isMinPressed();
+  	statusHour = isHourPressed();
+  
+  while (statusSet == LOW) {				// loop until set button not pressed
+  	
+    noTone(piezo);
+    digitalWrite(ledGreen, HIGH);
+    if (statusSec == HIGH) {
+    	secTime = secTime + 1;
+    }
+    
+    if (statusMin == HIGH) {
+    	minTime = minTime + 1;
+    }
+    
+    if (statusHour == HIGH) {
+    	hourTime = hourTime + 1;
+    }
+    
+    if (statusReset == HIGH) {
+		secTime = 0;
+      	minTime = 0;
+      	hourTime = 0;
+      	time = 0;
+    }
+    statusSet = digitalRead(set);
+	statusReset = digitalRead(reset);
+  	statusSec = isSecPressed();
+  	statusMin = isMinPressed();
+  	statusHour = isHourPressed();
+  }
+  
+  if (statusSet == HIGH) {
+      digitalWrite(ledGreen, LOW);
+
+      time = (secTime*1000 + minTime*60000 + hourTime*3600000);			// Add all time together
+  	  delay(time);														// Wait till time is up
+      tone(piezo, 1000);
+      digitalWrite(ledRed, HIGH);
+      delay(1000);
+      noTone(piezo);
+      digitalWrite(ledRed, LOW);
+      delay(1000);
+    
+      tone(piezo, 1000);
+      digitalWrite(ledRed, HIGH);
+      delay(1000);
+      noTone(piezo);
+      digitalWrite(ledRed, LOW);
+      delay(1000);
+    
+      tone(piezo, 1000);
+      digitalWrite(ledRed, HIGH);
+      delay(1000);
+      noTone(piezo);
+      digitalWrite(ledRed, LOW);
+      time = 0;
+      secTime = 0;
+      minTime = 0;
+      hourTime = 0;
+ 
+  }
+  
+}
+
+
+// Define methods for buttons, so only pressed once in loop
+
+boolean secPressed;
+boolean isSecPressed(){
+  boolean pressed = digitalRead(sec);
+
+  if(pressed && !secPressed){
+    secPressed = true;
+    return true;
+  }
+  if(pressed && secPressed){
+    return false;
+  } 
+  secPressed = false;
+  return false;
+}
+
+boolean minPressed;
+boolean isMinPressed(){
+  boolean pressed = digitalRead(min);
+
+  if(pressed && !minPressed){
+    minPressed = true;
+    return true;
+  }
+  if(pressed && minPressed){
+    return false;
+  } 
+  minPressed = false;
+  return false;
+}
+
+boolean hourPressed;
+boolean isHourPressed(){
+  boolean pressed = digitalRead(hour);
+
+  if(pressed && !hourPressed){
+    hourPressed = true;
+    return true;
+  }
+  if(pressed && hourPressed){
+    return false;
+  } 
+  hourPressed = false;
+  return false;
+}
+
+
